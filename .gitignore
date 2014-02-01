@@ -1,0 +1,20 @@
+# Auto generated project files
+config.cfg
+
+# Non-auto generated project files
+out/
+lib/
+
+# General compiled binaries
+*.exe
+*.bin
+*.out
+*.jar
+*.class
+
+# Eclipse files
+.cache
+.classpath
+.project
+.settings/
+.worksheet/
