@@ -132,8 +132,14 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
         }
       }
       
-      for (cp <- w.checkpoints)
-        if (collides(cp)) w.activeCheckpoint = cp
+      for (cp <- w.checkpoints) {
+        if (collides(cp)) {
+          w.activeCheckpoint.activated = false
+          
+          cp.activated = true
+          w.activeCheckpoint = cp
+        }
+      }
       
       if (!anycollision) onground = false
     }

@@ -5,9 +5,13 @@ import org.crockeo.genericplatformer.game.World
 import org.crockeo.genericplatformer.{ InputState, Graphics }
 
 class Checkpoint(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
+  var activated: Boolean = false
+  
   // Renderable
   def render {
-    Graphics.color(0, 1, 0)
+    if (activated) Graphics.color(1, 0, 0)
+    else           Graphics.color(0, 1, 0)
+    
     Graphics.rect(pos, size)
   }
   
