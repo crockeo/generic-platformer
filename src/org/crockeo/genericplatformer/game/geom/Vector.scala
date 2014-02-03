@@ -1,4 +1,4 @@
-package org.crockeo.learninglibgdx.game.geom
+package org.crockeo.genericplatformer.game.geom
 
 import com.badlogic.gdx.math.Vector2
 
@@ -6,7 +6,10 @@ class Vector(var x: Float, var y: Float) {
   // toString
   override def toString: String =
     s"{ ${x}, ${y} }"
-  
+    
+  // Copying the vector
+  def copy: Vector = new Vector(x, y)
+    
   // Mapping a function onto the vector by changing the values
   private def mapChange(fn: (Float, Float) => Float)(v: Vector) = set(mapKeep(fn)(v))
   

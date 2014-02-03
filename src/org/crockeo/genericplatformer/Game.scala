@@ -1,13 +1,9 @@
-package org.crockeo.learninglibgdx
+package org.crockeo.genericplatformer
 
 import com.badlogic.gdx.graphics.{OrthographicCamera, GL10}
 import com.badlogic.gdx.{ ApplicationListener, Gdx }
-import org.crockeo.learninglibgdx.game._
-impimport org.crockeo.learninglibgdx.Graphics
-import org.crockeo.learninglibgdx.Config
-import org.crockeo.learninglibgdx.InputConstructor
-ort org.crockeo.genericplatformer.Config
-import org.crockeo.genericplatformer.Graphics
+
+import org.crockeo.genericplatformer.game._
 
 class Game(cfg: Config) extends ApplicationListener {
   var update = true

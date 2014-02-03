@@ -1,16 +1,16 @@
-package org.crockeo.learninglibgdx.game.world
+package org.crockeo.genericplatformer.game.world
 
-import org.crockeo.learninglibgdx.game.geom._
-import org.crockeo.learninglibgdx.game.World
-import org.crockeo.learninglibgdx.{ InputState, Graphics }
+import org.crockeo.genericplatformer.game.geom._
+import org.crockeo.genericplatformer.game.World
+import org.crockeo.genericplatformer.{ InputState, Graphics }
 
 class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
-  private val accelrate   : Vector = new Vector(500, 400 )
-  private val airaccelrate: Vector = new Vector(150, 400 )
-  private val decelrate   : Vector = new Vector(650, 0   )
-  private val airdecelrate: Vector = new Vector(100, 0   )
-  private val maxspeed    : Vector = new Vector(150, 1000)
-  private val minspeed    : Vector = new Vector(5  , 5   )
+  private val accelrate   : Vector = new Vector(900 , 400 )
+  private val airaccelrate: Vector = new Vector(300 , 400 )
+  private val decelrate   : Vector = new Vector(1200, 0   )
+  private val airdecelrate: Vector = new Vector(450 , 0   )
+  private val maxspeed    : Vector = new Vector(300 , 1000)
+  private val minspeed    : Vector = new Vector(50  , 50  )
   private val jumpspeed   : Float  = 300
   private val stepheight  : Float  = 15
   
@@ -18,10 +18,12 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
   private var onground: Boolean = true
   private var justjumped: Boolean = false
   private var jumpsleft: Int = 2
-  private var maxheight: Float = 0
   
   // Renderable
-  def render { Graphics.rect(pos, size) }
+  def render {
+    Graphics.color(0, 0, 1)
+    Graphics.rect(pos, size)
+  }
   
   // Updateable
   def update(w: World, is: InputState, dt: Float) {    
@@ -64,6 +66,9 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
           justjumped = true
         }
       } else justjumped = false
+      
+      // Respawning
+      if (is.reset) w.respawn
     }
     
     // Applying gravity
@@ -95,7 +100,7 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
     def bound {
       var anycollision = false
       
-      for (b <- w.blocks) {    
+      for (b <- w.blocks) {
         collision(b) match {
           case None     => Unit
           case Some(ct) => {
@@ -104,7 +109,7 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
             ct match {
               case TopCollision    => {
                 pos.y = b.bottom
-                speed.y = (-speed.y / 12)
+                if (speed.y < 0) speed.y = (-speed.y / 12)
               }
               
               case BottomCollision => {
@@ -115,17 +120,20 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
                 
               case LeftCollision   => {
                 pos.x = b.right
-                speed.x = (-speed.x / 3)
+                if (speed.x < 0) speed.x = (-speed.x / 3)
               }
               
               case RightCollision  => {
                 pos.x = b.left - size.x
-                speed.x = (-speed.x / 3)
+                if (speed.x > 0) speed.x = (-speed.x / 3)
               }
             }
           }
         }
       }
+      
+      for (cp <- w.checkpoints)
+        if (collides(cp)) w.activeCheckpoint = cp
       
       if (!anycollision) onground = false
     }

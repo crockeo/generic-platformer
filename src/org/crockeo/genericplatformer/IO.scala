@@ -1,4 +1,4 @@
-package org.crockeo.learninglibgdx
+package org.crockeo.genericplatformer
 
 import java.io._
 

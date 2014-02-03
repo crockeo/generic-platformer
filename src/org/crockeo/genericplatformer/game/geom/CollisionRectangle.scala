@@ -1,4 +1,4 @@
-package org.crockeo.learninglibgdx.game.geom
+package org.crockeo.genericplatformer.game.geom
 
 // The types of collision
 trait CollisionType
@@ -9,9 +9,13 @@ case object LeftCollision   extends CollisionType
 case object RightCollision  extends CollisionType
 
 class CollisionRectangle(var pos: Vector, var size: Vector) {
+  // toString
   override def toString: String =
     s"${pos}\n${size}"
   
+  // Copying the CollisionRectangle
+  def copy: CollisionRectangle = new CollisionRectangle(pos.copy, size.copy)
+    
   // Accessors
   def x: Float = pos.x
   def y: Float = pos.y

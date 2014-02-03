@@ -1,9 +1,6 @@
-package org.crockeo.learninglibgdx
+package org.crockeo.genericplatformer
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
-import org.crockeo.genericplatformer.Gimport org.crockeo.learninglibgdx.ConfigParser
-ame
-import org.crockeo.learninglibgdx.Game
 
 object Main {
   def main(args: Array[String]) {

@@ -1,8 +1,4 @@
-package org.crockeo.learninglibgdx
-
-impimport org.crockeo.learninglibgdx.IO
-
-ort org.crockeo.genericplatformer.IO
+package org.crockeo.genericplatformer
 
 trait Parser[T] {
   // The default value

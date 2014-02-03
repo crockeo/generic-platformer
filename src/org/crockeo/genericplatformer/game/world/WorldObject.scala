@@ -1,8 +1,8 @@
-package org.crockeo.learninglibgdx.game.world
+package org.crockeo.genericplatformer.game.world
 
-import org.crockeo.learninglibgdx.game.traits._
-import org.crockeo.learninglibgdx.game.geom._
-import org.crockeo.learninglibgdx.game.World
+import org.crockeo.genericplatformer.game.traits._
+import org.crockeo.genericplatformer.game.geom._
+import org.crockeo.genericplatformer.game.World
 
 abstract class WorldObject(pos: Vector, size: Vector) extends CollisionRectangle(pos, size)
                                                       with    Renderable
