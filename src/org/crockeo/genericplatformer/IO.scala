@@ -35,5 +35,4 @@ object IO {
   def readFileCareful(path: String): Option[List[String]] =
     if (exists(path)) Some(readFile(path))
     else              None
-  
 }

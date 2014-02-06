@@ -1,9 +1,9 @@
-package org.crockeo.genericplatformer
+package org.crockeo.genericplatformer.game
 
-import com.badlogic.gdx.graphics.{OrthographicCamera, GL10}
+import com.badlogic.gdx.graphics.{ OrthographicCamera, GL10 }
 import com.badlogic.gdx.{ ApplicationListener, Gdx }
 
-import org.crockeo.genericplatformer.game._
+import org.crockeo.genericplatformer.{ InputConstructor, Graphics, Config }
 
 class Game(cfg: Config) extends ApplicationListener {
   var update = true
