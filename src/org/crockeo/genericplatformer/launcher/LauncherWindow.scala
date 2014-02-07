@@ -9,6 +9,7 @@ class LauncherWindow extends JFrame {
   add(panel)
   pack
   setResizable(false)
+  setLocationRelativeTo(null)
   
   setVisible(true)
 }
