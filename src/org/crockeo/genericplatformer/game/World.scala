@@ -39,6 +39,11 @@ class World(val sp: Vector, var blocks: List[Block], var checkpoints: List[Check
   }
 }
 
+object World {
+  def empty: World =
+    new World(new Vector(0, 0), List.empty, List.empty)
+}
+
 object WorldParser extends Parser[World] {
   val default: World = new World(new Vector(0, 0), List.empty, List.empty)
   
