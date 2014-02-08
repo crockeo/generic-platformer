@@ -26,7 +26,7 @@ class Game(cfg: Config) extends ApplicationListener {
   // Updating and rendering
   def render {
     if (update) {
-      val input = InputConstructor(cfg.inputConfig)
+      val input = InputConstructor(cfg)
       
       val gl = Gdx.gl10
     
@@ -37,10 +37,10 @@ class Game(cfg: Config) extends ApplicationListener {
       // Calculating the target for the camera
       val target = world.player.pos + (world.player.size / 2)
       
-      if (input.camLeft ) target.x -= (Gdx.graphics.getWidth  / 4)
-      if (input.camRight) target.x += (Gdx.graphics.getWidth  / 4)
-      if (input.camUp   ) target.y -= (Gdx.graphics.getHeight / 4)
-      if (input.camDown ) target.y += (Gdx.graphics.getHeight / 4)
+      if (input("camLeft")) target.x -= (Gdx.graphics.getWidth  / 4)
+      if (input("camRight")) target.x += (Gdx.graphics.getWidth  / 4)
+      if (input("camUp"   )) target.y -= (Gdx.graphics.getHeight / 4)
+      if (input("camDown" )) target.y += (Gdx.graphics.getHeight / 4)
       
       cam.position.x += (target.x - cam.position.x) * (Gdx.graphics.getDeltaTime * 6)
       cam.position.y += (target.y - cam.position.y) * (Gdx.graphics.getDeltaTime * 6)

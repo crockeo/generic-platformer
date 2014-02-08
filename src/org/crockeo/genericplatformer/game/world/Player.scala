@@ -2,7 +2,7 @@ package org.crockeo.genericplatformer.game.world
 
 import org.crockeo.genericplatformer.game.geom._
 import org.crockeo.genericplatformer.game.World
-import org.crockeo.genericplatformer.{ InputState, Graphics }
+import org.crockeo.genericplatformer.Graphics
 
 class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
   private val accelrate   : Vector = new Vector(900 , 400 )
@@ -26,7 +26,7 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
   }
   
   // Updateable
-  def update(w: World, is: InputState, dt: Float) {    
+  def update(w: World, rd: Map[String, Boolean], dt: Float) {    
     // Handling the input
     def handleInput {
       val as =
@@ -38,27 +38,27 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
         else          airdecelrate
         
       // Moving leftward
-      if (is.left )
+      if (rd("left") )
         if (speed.x > 0) speed.x -= ((as.x + ds.x) * dt)
         else             speed.x -= (as.x * dt)
         
       // Moving rightward
-      if (is.right)
+      if (rd("right"))
         if (speed.x < 0) speed.x += ((as.x + ds.x) * dt)
         else             speed.x += (as.x * dt)
       
       // Decelerating
-      if (!is.left && !is.right) {
+      if (!rd("left") && !rd("right")) {
              if (speed.x >= -minspeed.x && speed.x <= minspeed.x) speed.x = 0
         else if (speed.x >  minspeed.x)                           speed.x -= (ds.x * dt)
         else if (speed.x < -minspeed.x)                           speed.x += (ds.x * dt)
       }
       
       // Jumping
-      if (is.jump && jumpsleft > 0) {
+      if (rd("jump") && jumpsleft > 0) {
         if (!justjumped) {
-          if (is.left  && speed.x > minspeed.x) speed.x = -maxspeed.x / 3
-          if (is.right && speed.x < minspeed.x) speed.x =  maxspeed.x / 3
+          if (rd("left")  && speed.x > minspeed.x) speed.x = -maxspeed.x / 3
+          if (rd("right") && speed.x < minspeed.x) speed.x =  maxspeed.x / 3
           
           speed.y = -jumpspeed
           onground = false
@@ -68,7 +68,7 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
       } else justjumped = false
       
       // Respawning
-      if (is.reset) w.respawn
+      if (rd("reset")) w.respawn
     }
     
     // Applying gravity

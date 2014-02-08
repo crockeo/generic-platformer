@@ -3,7 +3,7 @@ package org.crockeo.genericplatformer.game
 import org.crockeo.genericplatformer.game.traits._
 import org.crockeo.genericplatformer.game.world._
 import org.crockeo.genericplatformer.game.geom._
-import org.crockeo.genericplatformer.{ InputState, Graphics, Parser }
+import org.crockeo.genericplatformer.{ Graphics, Parser }
 
 class World(val sp: Vector, var blocks: List[Block], var checkpoints: List[Checkpoint]) extends Renderable
                                                  with    Updateable {
@@ -33,9 +33,9 @@ class World(val sp: Vector, var blocks: List[Block], var checkpoints: List[Check
   }
   
   // Updateable
-  def update(w: World, is: InputState, dt: Float) {    
-    player.update(w, is, dt)
-    blocks.foreach(_.update(w, is, dt))
+  def update(w: World, kd: Map[String, Boolean], dt: Float) {    
+    player.update(w, kd, dt)
+    blocks.foreach(_.update(w, kd, dt))
   }
 }
 

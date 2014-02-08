@@ -2,7 +2,7 @@ package org.crockeo.genericplatformer.game.world
 
 import org.crockeo.genericplatformer.game.geom.Vector
 import org.crockeo.genericplatformer.game.World
-import org.crockeo.genericplatformer.{ InputState, Graphics }
+import org.crockeo.genericplatformer.Graphics
 
 class Block(sp: Vector, ss: Vector) extends WorldObject(sp, ss) {
   // Renderable
@@ -12,5 +12,5 @@ class Block(sp: Vector, ss: Vector) extends WorldObject(sp, ss) {
   }
   
   // Updateable
-  def update(w: World, is: InputState, dt: Float) { }
+  def update(w: World, rd: Map[String, Boolean], dt: Float) { }
 }

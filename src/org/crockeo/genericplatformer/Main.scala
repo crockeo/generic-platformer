@@ -15,8 +15,8 @@ object Main {
     val cfg = ConfigParser("config.cfg")
     
     if (args.length == 1) {
-           if (args(0) == "editor") app = new LwjglApplication(new Editor(cfg), cfg.displayConfig.makeLwjglApplicationConfiguration)
-      else if (args(0) == "game"  ) app = new LwjglApplication(new Game  (cfg), cfg.displayConfig.makeLwjglApplicationConfiguration)
+           if (args(0) == "editor") app = new LwjglApplication(new Editor(cfg), cfg.makeLwjglApplicationConfiguration)
+      else if (args(0) == "game"  ) app = new LwjglApplication(new Game  (cfg), cfg.makeLwjglApplicationConfiguration)
       else                          main(Array.empty)
     } else {
       new LauncherWindow

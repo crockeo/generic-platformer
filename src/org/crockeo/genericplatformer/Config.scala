@@ -3,15 +3,25 @@ package org.crockeo.genericplatformer
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 import com.badlogic.gdx.Input
 
-// Configuration for the display
-case class DisplayConfig(val width: Int, val height: Int, val fullscreen: Boolean) {  
-  override def toString: String =
-    s"dc ${width} ${height} ${fullscreen}"
+class Config(val width: Int, val height: Int, val fullscreen: Boolean,
+             val buttons: Map[String, Int], val keys: Map[String, Int]) {
+  // toString
+  override def toString: String = {
+    def makeString(pref: String, map: Map[String, Int]): String =
+      if (map.isEmpty) ""
+      else             map.map(pair => pref + " " + pair._1 + " " + pair._2).reduceLeft(_ + "\n" + _)
+      
+    s"width ${width}\n"                   +  
+    s"height ${height}\n"                 +
+    s"fullscreen ${fullscreen}"           +
+    s"${makeString("m", buttons)}\n" +
+    s"${makeString("k", keys)}"
+  }
     
+  // Making a LwjglApplicationConfiguration
   def makeLwjglApplicationConfiguration: LwjglApplicationConfiguration = {
     val cfg = new LwjglApplicationConfiguration
     
-    cfg.title = "Learning LibGDX"
     cfg.width = width
     cfg.height = height
     cfg.fullscreen = fullscreen
@@ -20,38 +30,56 @@ case class DisplayConfig(val width: Int, val height: Int, val fullscreen: Boolea
   }
 }
 
-// Configuration for input
-case class InputConfig(val left: Int, val right: Int, val jump: Int,
-                       val reset: Int,
-                       val camLeft: Int, val camRight: Int, val camUp: Int, val camDown: Int) { 
-  override def toString: String =
-    s"ic ${left} ${right} ${jump} ${camLeft} ${reset} ${camRight} ${camUp} ${camDown}"
-}
-
-// The general config file
-case class Config(val displayConfig: DisplayConfig, val inputConfig: InputConfig) {
-  override def toString: String =
-    displayConfig.toString + "\n" + inputConfig.toString
-}
-
 object ConfigParser extends Parser[Config] {
-  val default: Config = Config(DisplayConfig(640, 480, false), InputConfig(Input.Keys.A, Input.Keys.D, Input.Keys.SPACE,
-                                                                           Input.Keys.R,
-                                                                           Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN))
+  val default = new Config(640, 480, false,
+                          Map(
+                            
+                          ),
+                          
+                          Map(
+                            "left" -> Input.Keys.A,
+                            "right" -> Input.Keys.D,
+                            "jump" -> Input.Keys.SPACE,
+                            "reset" -> Input.Keys.R,
+                            
+                            "camLeft" -> Input.Keys.LEFT,
+                            "camRight" -> Input.Keys.RIGHT,
+                            "camUp" -> Input.Keys.UP,
+                            "camDown" -> Input.Keys.DOWN
+                          ))
   
   def parseLine(cfg: Config, line: String): Config = {
-    val sline = line.split(' ')
+    val sline = line.split(" ")
     
-    sline(0) match {
-      case "dc" =>
-        if (sline.length == 4) new Config(new DisplayConfig(sline(1).toInt, sline(2).toInt, sline(3).toBoolean), cfg.inputConfig)
-        else                   cfg
-      
-      case "ic" =>
-        if (sline.length == 7) new Config(cfg.displayConfig, new InputConfig(sline(1).toInt, sline(2).toInt, sline(3).toInt, sline(4).toInt, sline(5).toInt, sline(6).toInt, sline(7).toInt, sline(8).toInt))
-        else                   cfg
+    if (sline.length > 0) {
+      sline(0) match {
+        case "width" =>
+          if (sline.length == 2) new Config(sline(1).toInt, cfg.height, cfg.fullscreen,
+                                            cfg.buttons,
+                                            cfg.keys)
+          else                   cfg
         
-      case default => cfg
-    }
+        case "height" =>
+          if (sline.length == 2) new Config(cfg.width, sline(1).toInt, cfg.fullscreen,
+                                            cfg.buttons,
+                                            cfg.keys)
+          else                   cfg
+        case "fullscreen" =>
+          if (sline.length == 2) new Config(cfg.width, cfg.height, sline(1).toBoolean,
+                                            cfg.buttons, cfg.keys)
+          else                   cfg
+        
+        case "m" =>
+          if (sline.length == 3) new Config(cfg.width, cfg.height, cfg.fullscreen,
+                                            cfg.buttons + (sline(1) -> sline(2).toInt),
+                                            cfg.keys)
+          else                   cfg
+        case "k" =>
+          if (sline.length == 3) new Config(cfg.width, cfg.height, cfg.fullscreen,
+                                            cfg.buttons,
+                                            cfg.keys + (sline(1) -> sline(2).toInt))
+          else cfg
+      }
+    } else cfg
   }
 }

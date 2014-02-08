@@ -24,7 +24,7 @@ class Editor(cfg: Config) extends ApplicationListener {
   
   // Updating and rendering
   def render {
-    val input = InputConstructor(cfg.inputConfig)
+    val input = InputConstructor(cfg)
     val gl = Gdx.gl10
     
     // TODO: Finish the editor

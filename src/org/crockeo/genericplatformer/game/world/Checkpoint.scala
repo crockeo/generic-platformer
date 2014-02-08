@@ -2,7 +2,7 @@ package org.crockeo.genericplatformer.game.world
 
 import org.crockeo.genericplatformer.game.geom.Vector
 import org.crockeo.genericplatformer.game.World
-import org.crockeo.genericplatformer.{ InputState, Graphics }
+import org.crockeo.genericplatformer.Graphics
 
 class Checkpoint(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
   var activated: Boolean = false
@@ -16,7 +16,5 @@ class Checkpoint(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
   }
   
   // Updateable
-  def update(w: World, is: InputState, dt: Float) {
-    
-  }
+  def update(w: World, rd: Map[String, Boolean], dt: Float) { }
 }
