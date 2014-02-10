@@ -3,7 +3,7 @@ package org.crockeo.genericplatformer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.OrthographicCamera
 
-import org.crockeo.genericplatformer.game.geom.Vector
+import org.crockeo.genericplatformer.geom.Vector
 
 object Graphics {
   private var sr: ShapeRenderer = null

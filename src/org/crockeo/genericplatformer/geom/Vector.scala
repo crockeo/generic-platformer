@@ -1,4 +1,4 @@
-package org.crockeo.genericplatformer.game.geom
+package org.crockeo.genericplatformer.geom
 
 import com.badlogic.gdx.math.Vector2
 

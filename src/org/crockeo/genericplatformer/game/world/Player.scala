@@ -1,18 +1,16 @@
 package org.crockeo.genericplatformer.game.world
 
-import org.crockeo.genericplatformer.game.geom._
 import org.crockeo.genericplatformer.game.World
+import org.crockeo.genericplatformer.geom._
 import org.crockeo.genericplatformer.Graphics
-
 class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
-  private val accelrate   : Vector = new Vector(900 , 400 )
-  private val airaccelrate: Vector = new Vector(300 , 400 )
-  private val decelrate   : Vector = new Vector(1200, 0   )
-  private val airdecelrate: Vector = new Vector(450 , 0   )
-  private val maxspeed    : Vector = new Vector(300 , 1000)
-  private val minspeed    : Vector = new Vector(50  , 50  )
-  private val jumpspeed   : Float  = 300
-  private val stepheight  : Float  = 15
+  private val maxspeed    : Vector = new Vector(300f , 1200f)
+  private val minspeed    : Vector = new Vector(50f  , 50f  )
+  private val accelrate   : Vector = new Vector(0.25f, 1.75f)
+  private val airaccelrate: Vector = new Vector(1f   , 1.75f)
+  private val decelrate   : Vector = new Vector(0.2f , 1f   )
+  private val airdecelrate: Vector = new Vector(2.f  , 1f   )
+  private val jumpspeed   : Float  = 400
   
   private var speed: Vector = new Vector(0, 0)
   private var onground: Boolean = true
@@ -39,19 +37,20 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
         
       // Moving leftward
       if (rd("left") )
-        if (speed.x > 0) speed.x -= ((as.x + ds.x) * dt)
-        else             speed.x -= (as.x * dt)
+        if (speed.x >  minspeed.x) speed.x = Lerps.lerp(speed.x, -maxspeed.x, Math.abs(as.x - ds.x), dt)
+        else                       speed.x = Lerps.lerp(speed.x, -maxspeed.x, as.x                 , dt)
         
       // Moving rightward
       if (rd("right"))
-        if (speed.x < 0) speed.x += ((as.x + ds.x) * dt)
-        else             speed.x += (as.x * dt)
+        if (speed.x < -minspeed.x) speed.x = Lerps.lerp(speed.x,  maxspeed.x, math.abs(as.x - ds.x), dt)
+        else                       speed.x = Lerps.lerp(speed.x,  maxspeed.x, as.x                 , dt)
       
       // Decelerating
       if (!rd("left") && !rd("right")) {
-             if (speed.x >= -minspeed.x && speed.x <= minspeed.x) speed.x = 0
-        else if (speed.x >  minspeed.x)                           speed.x -= (ds.x * dt)
-        else if (speed.x < -minspeed.x)                           speed.x += (ds.x * dt)
+        if (speed.x >= -minspeed.x &&
+            speed.x <=  minspeed.x &&
+            onground                 ) speed.x = 0
+        else                           speed.x = Lerps.lerp(speed.x, 0, ds.x, dt)
       }
       
       // Jumping
@@ -78,7 +77,7 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
         jumpsleft =
           if (jumpsleft >= 1) 1
           else                0
-        speed.y += (accelrate.y * dt)
+        speed.y = Lerps.lerp(speed.y, maxspeed.y, accelrate.y, dt)
       }
     }
     
@@ -120,12 +119,12 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
                 
               case LeftCollision   => {
                 pos.x = b.right
-                if (speed.x < 0) speed.x = (-speed.x / 3)
+                if (speed.x < 0) speed.x = (-speed.x / 6)
               }
               
               case RightCollision  => {
                 pos.x = b.left - size.x
-                if (speed.x > 0) speed.x = (-speed.x / 3)
+                if (speed.x > 0) speed.x = (-speed.x / 6)
               }
             }
           }

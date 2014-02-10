@@ -3,6 +3,7 @@ package org.crockeo.genericplatformer.game
 import com.badlogic.gdx.graphics.{ OrthographicCamera, GL10 }
 import com.badlogic.gdx.{ ApplicationListener, Gdx }
 
+import org.crockeo.genericplatformer.geom.Lerps
 import org.crockeo.genericplatformer.{ InputConstructor, Graphics, Config }
 
 class Game(cfg: Config) extends ApplicationListener {
@@ -27,7 +28,6 @@ class Game(cfg: Config) extends ApplicationListener {
   def render {
     if (update) {
       val input = InputConstructor(cfg)
-      
       val gl = Gdx.gl10
     
       gl.glClear(GL10.GL_COLOR_BUFFER_BIT)
@@ -37,13 +37,13 @@ class Game(cfg: Config) extends ApplicationListener {
       // Calculating the target for the camera
       val target = world.player.pos + (world.player.size / 2)
       
-      if (input("camLeft")) target.x -= (Gdx.graphics.getWidth  / 4)
+      if (input("camLeft" )) target.x -= (Gdx.graphics.getWidth  / 4)
       if (input("camRight")) target.x += (Gdx.graphics.getWidth  / 4)
       if (input("camUp"   )) target.y -= (Gdx.graphics.getHeight / 4)
       if (input("camDown" )) target.y += (Gdx.graphics.getHeight / 4)
       
-      cam.position.x += (target.x - cam.position.x) * (Gdx.graphics.getDeltaTime * 6)
-      cam.position.y += (target.y - cam.position.y) * (Gdx.graphics.getDeltaTime * 6)
+      cam.position.x = Lerps.lerp(cam.position.x, target.x, 0.2f, Gdx.graphics.getDeltaTime)
+      cam.position.y = Lerps.lerp(cam.position.y, target.y, 0.2f, Gdx.graphics.getDeltaTime)
                     
       cam.update
       cam.apply(gl)

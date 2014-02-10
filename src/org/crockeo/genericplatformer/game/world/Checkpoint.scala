@@ -1,6 +1,6 @@
 package org.crockeo.genericplatformer.game.world
 
-import org.crockeo.genericplatformer.game.geom.Vector
+import org.crockeo.genericplatformer.geom.Vector
 import org.crockeo.genericplatformer.game.World
 import org.crockeo.genericplatformer.Graphics
 

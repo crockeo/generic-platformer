@@ -2,7 +2,7 @@ package org.crockeo.genericplatformer.game
 
 import org.crockeo.genericplatformer.game.traits._
 import org.crockeo.genericplatformer.game.world._
-import org.crockeo.genericplatformer.game.geom._
+import org.crockeo.genericplatformer.geom.Vector
 import org.crockeo.genericplatformer.{ Graphics, Parser }
 
 class World(val sp: Vector, var blocks: List[Block], var checkpoints: List[Checkpoint]) extends Renderable

@@ -1,4 +1,4 @@
-package org.crockeo.genericplatformer.game.geom
+package org.crockeo.genericplatformer.geom
 
 // The types of collision
 trait CollisionType
