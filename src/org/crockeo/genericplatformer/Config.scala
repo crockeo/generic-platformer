@@ -11,9 +11,9 @@ class Config(val width: Int, val height: Int, val fullscreen: Boolean,
       if (map.isEmpty) ""
       else             map.map(pair => pref + " " + pair._1 + " " + pair._2).reduceLeft(_ + "\n" + _)
       
-    s"width ${width}\n"                   +  
-    s"height ${height}\n"                 +
-    s"fullscreen ${fullscreen}"           +
+    s"width ${width}\n"              +  
+    s"height ${height}\n"            +
+    s"fullscreen ${fullscreen}\n"    +
     s"${makeString("m", buttons)}\n" +
     s"${makeString("k", keys)}"
   }
@@ -33,7 +33,8 @@ class Config(val width: Int, val height: Int, val fullscreen: Boolean,
 object ConfigParser extends Parser[Config] {
   val default = new Config(640, 480, false,
                           Map(
-                            "mouseLeft" -> Input.Buttons.LEFT
+                            "mouseLeft" -> Input.Buttons.LEFT,
+                            "mouseRight" -> Input.Buttons.RIGHT
                           ),
                           
                           Map(
