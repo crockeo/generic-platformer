@@ -34,7 +34,8 @@ object ConfigParser extends Parser[Config] {
   val default = new Config(640, 480, false,
                           Map(
                             "mouseLeft" -> Input.Buttons.LEFT,
-                            "mouseRight" -> Input.Buttons.RIGHT
+                            "mouseRight" -> Input.Buttons.RIGHT,
+                            "mouseMiddle" -> Input.Buttons.MIDDLE
                           ),
                           
                           Map(

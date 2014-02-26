@@ -37,31 +37,53 @@ class Editor(cfg: Config) extends ApplicationListener {
     def update {
       val cp = new Vector(game.cam.position.x - (Gdx.graphics.getWidth / 2), game.cam.position.y - (Gdx.graphics.getHeight / 2))
       val mp = new Vector(Gdx.input.getX, Gdx.input.getY)
+      val ep = cp + mp
       
+      // Handling events from the left mouse button
       ButtonEvent("mouseLeft") match {
         case NoEvent        => Unit
-        case ButtonPressed  => game.world.blocks = game.world.blocks :+ new Block(mp + cp, new Vector(0, 0))
-        case ButtonHeld     => game.world.blocks.last.size = (mp + cp) - game.world.blocks.last.pos
+        case ButtonPressed  => game.world.blocks = new Block(ep, new Vector(0, 0)) +: game.world.blocks
+        case ButtonHeld     => game.world.blocks.head.size = ep - game.world.blocks.head.pos
         case ButtonReleased => {
           // Fixing negative blocks
-          if (game.world.blocks.last.size.x < 0) {
-            game.world.blocks.last.pos.x = game.world.blocks.last.pos.x + game.world.blocks.last.size.x
-            game.world.blocks.last.size.x = -game.world.blocks.last.size.x
+          if (game.world.blocks.head.size.x < 0) {
+            game.world.blocks.head.pos.x = game.world.blocks.head.pos.x + game.world.blocks.head.size.x
+            game.world.blocks.head.size.x = -game.world.blocks.head.size.x
           }
           
           // Fixing negative blocks
-          if (game.world.blocks.last.size.y < 0) {
-            game.world.blocks.last.pos.y = game.world.blocks.last.pos.y + game.world.blocks.last.size.y
-            game.world.blocks.last.size.y = -game.world.blocks.last.size.y
+          if (game.world.blocks.head.size.y < 0) {
+            game.world.blocks.head.pos.y = game.world.blocks.head.pos.y + game.world.blocks.head.size.y
+            game.world.blocks.head.size.y = -game.world.blocks.head.size.y
           }
         }
       }
       
+      // Handling events from the right mouse button
       ButtonEvent("mouseRight") match {
+        case NoEvent        => Unit
+        case ButtonPressed  => game.world.checkpoints = new Checkpoint(ep) +: game.world.checkpoints
+        case ButtonHeld     => game.world.checkpoints.head.pos = ep
+        case ButtonReleased => Unit
+      }
+      
+      // Handling events from the middle mouse button
+      ButtonEvent("mouseMiddle") match {
         case NoEvent        => Unit
         case ButtonPressed  => Unit
         case ButtonHeld     => Unit
-        case ButtonReleased => Unit
+        case ButtonReleased => {
+          val fb = game.world.blocks.find(_ contains ep)
+          val fc = game.world.blocks.find(_ contains ep)
+          
+          fb match {
+            case Some(b) => ???
+            case None =>
+              fc match {
+                // TODO: FINISH
+              }
+          }
+        }
       }
     }
     

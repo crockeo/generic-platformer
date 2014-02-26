@@ -44,11 +44,15 @@ class CollisionRectangle(var pos: Vector, var size: Vector) {
   def right : Float = pos.x + size.x
   
   // Checking relative location
-  def on     (cr: CollisionRectangle): Boolean = center.on(cr.center)
+  def ==     (cr: CollisionRectangle): Boolean = center == cr.center
   def above  (cr: CollisionRectangle): Boolean = center.above(cr.center)
   def below  (cr: CollisionRectangle): Boolean = center.below(cr.center)
   def leftOf (cr: CollisionRectangle): Boolean = center.leftOf(cr.center)
   def rightOf(cr: CollisionRectangle): Boolean = center.rightOf(cr.center)
+  
+  // Checking if the collision rectangle contains a vector
+  def contains(v: Vector): Boolean =
+    (left <= v.x) && (right >= v.x) && (top <= v.y) && (bottom >= v.y)
   
   // Separating Axis Theorem collision
   def collision(cr: CollisionRectangle): Option[CollisionType] = {

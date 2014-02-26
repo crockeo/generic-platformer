@@ -61,7 +61,9 @@ class Vector(var x: Float, var y: Float) {
   def /=(f: Float): Unit = this /= vec(f)
   
   // Checking relative location
-  def on     (v: Vector): Boolean = (x == v.x) && (y == v.y)
+  def ==     (v: Vector): Boolean = (x == v.x) && (y == v.y)
+  def <      (v: Vector): Boolean = (x <  v.x) && (y <  v.y)
+  def >      (v: Vector): Boolean = (x >  v.x) && (y >  v.y)
   def above  (v: Vector): Boolean = y < v.y
   def below  (v: Vector): Boolean = y > v.y
   def leftOf (v: Vector): Boolean = x < v.x
