@@ -59,7 +59,7 @@ class CollisionRectangle(var pos: Vector, var size: Vector) {
     val t: Vector = center.distanceSplit(cr.center) - (size / 2) - (cr.size / 2)
     
     if (t.x <= 0 && t.y <= 0) {
-      if (t.y >= t.x) {
+      if (t.y >= t.x || Math.abs(t.x - t.y) < 5) {
         if      (above(cr)) Some(BottomCollision)
         else if (below(cr)) Some(TopCollision)
         else                None

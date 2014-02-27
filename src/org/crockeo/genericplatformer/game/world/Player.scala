@@ -112,9 +112,11 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
               }
               
               case BottomCollision => {
-                pos.y =  b.top - size.y
-                onground = true
-                jumpsleft = 2
+                if (speed.y >= 0) {
+                  pos.y =  b.top - size.y
+                  onground = true
+                  jumpsleft = 2
+                }
               }
                 
               case LeftCollision   => {
