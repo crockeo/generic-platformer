@@ -73,14 +73,14 @@ class Editor(cfg: Config) extends ApplicationListener {
         case ButtonPressed  => Unit
         case ButtonHeld     => Unit
         case ButtonReleased => {
-          val fb = game.world.blocks.find(_ contains ep)
-          val fc = game.world.blocks.find(_ contains ep)
+          val fc = game.world.checkpoints.find(_ contains ep)
           
-          fb match {
-            case Some(b) => ???
+          game.world.blocks.find(_ contains ep) match {
+            case Some(b) => { println("RAWR"); game.world.removeBlock(b) }
             case None =>
               fc match {
-                // TODO: FINISH
+                case Some(c) => game.world.removeCheckpoint(c)
+                case None    => Unit
               }
           }
         }

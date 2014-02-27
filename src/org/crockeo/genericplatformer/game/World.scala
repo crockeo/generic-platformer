@@ -23,6 +23,28 @@ class World(val sp: Vector, var blocks: List[Block], var checkpoints: List[Check
   
   def respawn = { player = makeRespawnPlayer }
   
+  // Adding or removing either a block or a checkpoint
+  private def add[T](t: T, b: Boolean): Unit =
+    if (b) blocks = t.asInstanceOf[Block] +: blocks
+    else   checkpoints = t.asInstanceOf[Checkpoint] +: checkpoints
+    
+  private def remove[T](t: T, b: Boolean): Unit = {
+    val bef =
+      if (b) blocks.takeWhile(_ != t)
+      else   checkpoints.takeWhile(_ != t)
+        
+    if (b) blocks = bef.asInstanceOf[List[Block]] ++ blocks.drop(bef.length + 1)
+    else   checkpoints = bef.asInstanceOf[List[Checkpoint]] ++ checkpoints.drop(bef.length + 1)
+  }
+  
+  // Adding or removing a block
+  def addBlock(b: Block): Unit = add[Block](b, true)
+  def removeBlock(b: Block): Unit = remove[Block](b, true)
+  
+  // Adding or removing a checkpoint
+  def addCheckpoint(c: Checkpoint): Unit = add[Checkpoint](c, false)
+  def removeCheckpoint(c: Checkpoint): Unit = remove[Checkpoint](c, false)
+  
   // Renderable
   def render {
     Graphics.start
