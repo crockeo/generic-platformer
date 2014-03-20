@@ -10,8 +10,8 @@ trait AssetManager[T] {
   def cache(path: String): Unit =
     if (!cache.contains(path)) cache = cache + (path -> loadBackend(path))
   
-  // Uncaching an asset
-  def uncache(path: String): Unit =
+  // Decaching an asset
+  def decache(path: String): Unit =
     if (cache.contains(path)) cache = cache - path
   
   // Loading an asset
@@ -23,6 +23,6 @@ trait AssetManager[T] {
       temp
     }
   
-  // Loading all assets
+  // Caching all assets
   def init = {}
 }
