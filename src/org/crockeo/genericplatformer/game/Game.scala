@@ -3,6 +3,7 @@ package org.crockeo.genericplatformer.game
 import com.badlogic.gdx.graphics.{ OrthographicCamera, GL10 }
 import com.badlogic.gdx.{ ApplicationListener, Gdx }
 
+import org.crockeo.genericplatformer.assets._
 import org.crockeo.genericplatformer.geom.Lerps
 import org.crockeo.genericplatformer.{ InputConstructor, Graphics, Config }
 
@@ -13,12 +14,21 @@ class Game(cfg: Config) extends ApplicationListener {
   
   // Initializing the game
   def create {
+    // Creating the camera
     cam = new OrthographicCamera(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
     cam.setToOrtho(true, Gdx.graphics.getWidth, Gdx.graphics.getHeight)
     
-    
+    // Creating the graphics
     Graphics.create(cam)
+    
+    // Loading the world
     world = WorldParser("world.txt")
+    
+    // Loading all the assets
+    AnimationManager.init
+    TextureManager.init
+    MusicManager.init
+    SoundManager.init
   }
   
   // Cleaning up
