@@ -9,8 +9,9 @@ import org.crockeo.genericplatformer.Graphics
 
 class Block(sp: Vector, ss: Vector) extends WorldObject(sp, ss) {
   // Renderable
-  def render: Unit =
+  def render {
     Graphics.render("blocks", TextureManager.rLoad("res/block.png"), pos.x, pos.y, size.x, size.y)
+  }
   
   // Updateable
   def update(w: World, rd: Map[String, Boolean], dt: Float) { }

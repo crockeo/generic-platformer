@@ -20,8 +20,9 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
   private var jumpsleft: Int = 2
   
   // Renderable
-  def render =
+  def render = {
     Graphics.render("player", TextureManager.rLoad("res/player.png"), pos.x, pos.y, size.x, size.y)
+  }
   
   // Updateable
   def update(w: World, rd: Map[String, Boolean], dt: Float) {    
