@@ -58,6 +58,7 @@ class Game(cfg: Config) extends ApplicationListener {
       cam.update
       cam.apply(gl)
       
+      AnimationManager.update(Gdx.graphics.getDeltaTime)
       world.update(world, input, Gdx.graphics.getDeltaTime)
       world.render
     }

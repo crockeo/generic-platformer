@@ -6,7 +6,7 @@ import org.crockeo.genericplatformer.geom.Vector
 import org.crockeo.genericplatformer.{ Graphics, Parser }
 
 class World(val sp: Vector, var blocks: List[Block], var checkpoints: List[Checkpoint]) extends Renderable
-                                                 with    Updateable {
+                                                                                        with    Updateable {
   override def toString: String = {
     val spString: String = s"sp ${sp.x} ${sp.y}"
     def blockString(b: Block): String = s"b ${b.pos.x} ${b.pos.y} ${b.size.x} ${b.size.y}"
@@ -47,11 +47,17 @@ class World(val sp: Vector, var blocks: List[Block], var checkpoints: List[Check
   
   // Renderable
   def render {
-    Graphics.start
+    Graphics.start("player")
       player.render
+    Graphics.end("player")
+    
+    Graphics.start("blocks")
       blocks.foreach(_.render)
+    Graphics.end("blocks")
+    
+    Graphics.start("checkpoints")
       checkpoints.foreach(_.render)
-    Graphics.end
+    Graphics.end("checkpoints")
   }
   
   // Updateable

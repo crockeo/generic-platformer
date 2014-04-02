@@ -89,9 +89,9 @@ class Editor(cfg: Config) extends ApplicationListener {
     
     update
     if (newblock != null) {
-      Graphics.start
+      Graphics.start("blocks")
         newblock.render
-      Graphics.end
+      Graphics.end("blocks")
     }
     
     game.render

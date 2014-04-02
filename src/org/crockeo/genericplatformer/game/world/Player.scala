@@ -1,8 +1,10 @@
 package org.crockeo.genericplatformer.game.world
 
+import org.crockeo.genericplatformer.assets.TextureManager
 import org.crockeo.genericplatformer.game.World
 import org.crockeo.genericplatformer.geom._
 import org.crockeo.genericplatformer.Graphics
+
 class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
   private val maxspeed    : Vector = new Vector(300f , 1200f)
   private val minspeed    : Vector = new Vector(50f  , 50f  )
@@ -18,10 +20,8 @@ class Player(sp: Vector) extends WorldObject(sp, new Vector(32, 64)) {
   private var jumpsleft: Int = 2
   
   // Renderable
-  def render {
-    Graphics.color(0, 0, 1)
-    Graphics.rect(pos, size)
-  }
+  def render =
+    Graphics.render("player", TextureManager.rLoad("res/player.png"), pos.x, pos.y, size.x, size.y)
   
   // Updateable
   def update(w: World, rd: Map[String, Boolean], dt: Float) {    
